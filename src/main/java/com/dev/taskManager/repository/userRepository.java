@@ -9,6 +9,8 @@ import com.dev.taskManager.entity.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -37,8 +39,14 @@ public class userRepository {
     public Optional<User> findByName(String name) {
         return userCrudRepository.findByName(name);
     }
+
+
     public List<User> findAllUsers() {
         return (List<User>) userCrudRepository.findAll();
+    }
+
+    public Page<User> findAllUsersPageable(Pageable pageable) {
+        return userCrudRepository.findAll(pageable);
     }
 
     public User updateUser(User user) {

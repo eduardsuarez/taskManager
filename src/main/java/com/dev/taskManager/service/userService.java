@@ -8,6 +8,8 @@ import com.dev.taskManager.repository.userRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -47,8 +49,14 @@ public class userService {
     public Optional<User> findByName(String name) {
         return userRepository.findByName(name);
     }
+
+
     public List<User> findAllUsers() {
         return userRepository.findAllUsers();
+    }
+
+    public Page<User> findAllUsersPageable(Pageable pageable) {
+        return userRepository.findAllUsersPageable(pageable);
     }
     public User updateUser(User user) {
         if (user.getId() != null) {
