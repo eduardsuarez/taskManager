@@ -6,6 +6,9 @@ package com.dev.taskManager.repository;
 
 import com.dev.taskManager.crudRepository.taskCrudRepository;
 import com.dev.taskManager.entity.Task;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +41,10 @@ public class TaskRepository {
         crudRepository.delete(task);
         
     }
-    
+
+    public List<Task> findAllByCreationDateAndExpirationDate(Date start, Date end) {
+        return crudRepository.findAllByCreationDateGreaterThanEqualAndExpirationDateLessThanEqual(start, end);
+    }
+
+
 }

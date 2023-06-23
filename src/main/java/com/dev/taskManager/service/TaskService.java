@@ -6,8 +6,13 @@ package com.dev.taskManager.service;
 
 import com.dev.taskManager.entity.Task;
 import com.dev.taskManager.repository.TaskRepository;
-import java.util.List;
-import java.util.Optional;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +80,28 @@ public class TaskService {
             return true;
         }
     }
+
+    public List<Task> reportTaskTime(String dateA, String dateB){
+        LocalDate start;
+        LocalDate end;
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            start = LocalDate.parse(dateA, dateFormatter);
+            end = LocalDate.parse(dateB, dateFormatter);
+        } catch (DateTimeParseException e) {
+            // Manejar la excepción de análisis de fecha
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+
+        if (start.isBefore(end)) {
+            return taskRepository.findAllByCreationDateAndExpirationDate(Date.from(start.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    Date.from(end.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
 
 }
