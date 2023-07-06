@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author eduar
  */
 @Repository
-public class userRepository {
+public class UserRepository {
     @Autowired
     private userCrudRepository userCrudRepository;
 
@@ -49,12 +49,17 @@ public class userRepository {
         return userCrudRepository.findAll(pageable);
     }
 
-    public User updateUser(User user) {
-        return userCrudRepository.save(user);
+    public void updateUser(User user) {
+        userCrudRepository.save(user);
     }
     public void deleteUserById(User user) {
         userCrudRepository.delete(user);
 
     }
+/**
+    public Optional<User> authenticateUser(String email, String password) {
+        return userCrudRepository.findByEmailAndPassword(email, password);
+    }
+ **/
     
 }

@@ -65,6 +65,13 @@ public class userController {
     public boolean deleteUser(@PathVariable int id) {
         return userService.deleteUserById(id);
     }
+
+    /*
+    @GetMapping("/{email}/{password}")
+    public User authnticatedUser(@PathVariable("email") String email, @PathVariable("password") String password){
+        return userService.authenticateUser(email, password);
+    }
+    */
     
     
 }
