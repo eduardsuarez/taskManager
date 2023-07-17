@@ -4,8 +4,8 @@
  */
 package com.dev.taskManager.repository;
 
-import com.dev.taskManager.crudRepository.statusTaskCrudRepository;
-import com.dev.taskManager.entity.StatusTask;
+import com.dev.taskManager.crudRepository.projectCrudRepository;
+import com.dev.taskManager.entity.Project;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +17,26 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ProjectRepository {
-    @Autowired
-    private statusTaskCrudRepository crudRepository;
+     @Autowired
+    private projectCrudRepository crudRepository;
     
-    public StatusTask create(StatusTask statusTask){
-        return crudRepository.save(statusTask);
+    public Project create(Project project){
+        return crudRepository.save(project);
     }
     
-    public Optional<StatusTask> findStatusTaskById(int id){
+    public Optional<Project> findProjectById(int id){
         return crudRepository.findById(id);
     }
     
-    public List<StatusTask> findAllStatusTasks(){
-        return (List<StatusTask>) crudRepository.findAll();
+    public List<Project> findAllProjects(){
+        return (List<Project>) crudRepository.findAll();
     }
-    public StatusTask update(StatusTask statusTask){
-        return crudRepository.save(statusTask);
+    public Project update(Project project){
+        return crudRepository.save(project);
         
     }
-    public void delete(StatusTask statusTask) {
-        crudRepository.delete(statusTask);
+    public void delete(Project project) {
+        crudRepository.delete(project);
         
     }
     
