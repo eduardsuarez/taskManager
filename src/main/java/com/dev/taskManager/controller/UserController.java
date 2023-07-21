@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,11 +77,16 @@ public class UserController {
         return userService.deleteUserById(id);
     }
 
-    /*
-    @GetMapping("/{email}/{password}")
-    public User authnticatedUser(@PathVariable("email") String email, @PathVariable("password") String password){
-        return userService.authenticateUser(email, password);
+    
+    @PostMapping("/authenticate")
+    public ResponseEntity<User> authnticatedUser(@RequestBody User user){
+        User authenticatedUser = userService.authenticateUser(user.getEmail(), user.getPassword());
+        if (authenticatedUser != null) {
+            return ResponseEntity.ok(authenticatedUser);
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
-    */
+    
     
 }

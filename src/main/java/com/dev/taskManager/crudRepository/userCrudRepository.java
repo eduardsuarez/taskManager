@@ -15,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface userCrudRepository extends JpaRepository<User, Integer>{
     public Optional<User> findByEmail(String email);
     public Optional<User> findByName(String name);
+
+    public Optional<User> findByEmailAndPassword(String email, String password);
     
 }

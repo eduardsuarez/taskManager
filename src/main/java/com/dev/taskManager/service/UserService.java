@@ -20,19 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    
     private final UserRepository userRepository;
-    
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    
-    
-    
 
     public User save(User user) {
         if (user.getId() == null) {
@@ -114,16 +109,38 @@ public class UserService {
         }
     }
 
-
-    /*
     public User authenticateUser(String email, String password) {
-        Optional<User> user = userRepository.authenticateUser(email, password);
+        
+        Optional<User> user = userRepository.findByEmail(email);
+        System.out.println("user from DB: " + user);
+        
         if (user.isEmpty()) {
-            return new User();
+            return null;
         } else {
-            return user.get();
+            
+            //System.out.println("correo recibido: " + email + " contraseña: " + password);
+
+            /* Aquí se realiza la comparación entre la contraseña cifrada en la 
+            base de datos y la contraseña sin cifrar ingresada por el usuario
+            Si coincide, el usuario está autenticado; de lo contrario, el usuario
+            no está autenticado. */
+           
+            String storedPassword = user.get().getPassword(); // contraseña cifrada almacenada en la base de datos
+            
+            boolean isPasswordValid = passwordEncoder.matches(password, storedPassword);
+            //System.out.println("correo recibido: " + email + " contraseña: " + password + " es cierto: " + (isPasswordValid ? "sí" : "no"));
+            
+            
+            if (isPasswordValid) {
+                System.out.println("se autenticó");
+                return user.get();
+            } else {
+                System.out.println("error");
+                return null;
+            }
+
         }
 
     }
-     */
+
 }
