@@ -6,7 +6,12 @@ package com.dev.taskManager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,6 +45,26 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private String password;
+    
+    public enum UserRole {
+        ADMIN,
+        USER,
+        MANAGER
+    }
+    
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+    
+    public enum Permission {
+        CREATE_USER,
+        DELETE_USER,
+        UPDATE_PRODUCT
+    }
+    
+    @ElementCollection(targetClass = Permission.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Permission> permissions;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

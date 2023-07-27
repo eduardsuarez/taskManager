@@ -44,8 +44,17 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+        
+        // Obtener el usuario por ID
+        Optional<User> user = userService.getUserById(id);
+        
+        // Verificar si el usuario existe y si tiene permiso para acceder  a esta información
+        if (user.isPresent() && user.get().getRole() == User.UserRole.ADMIN) {
+            return ResponseEntity.ok(user.get());
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
     @GetMapping("/name/{userName}")
     public Optional<User> findByName(@PathVariable("name") String name) {
