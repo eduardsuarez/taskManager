@@ -6,8 +6,6 @@ package com.dev.taskManager.repository;
 
 import com.dev.taskManager.crudRepository.taskCrudRepository;
 import com.dev.taskManager.entity.Task;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +43,4 @@ public class TaskRepository {
     public List<Task> findAllByCreationDateAndExpirationDate(Date start, Date end) {
         return crudRepository.findAllByCreationDateGreaterThanEqualAndExpirationDateLessThanEqual(start, end);
     }
-
-
 }

@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "priority-task")
-public class PriorityTask {
+public class PriorityTask implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,5 +37,5 @@ public class PriorityTask {
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "priorityTask")
     @JsonIgnoreProperties("priorityTask")
     private Set<Task> tasks;
-    
+
 }

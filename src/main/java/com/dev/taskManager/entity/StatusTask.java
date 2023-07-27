@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,14 +27,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "status-task")
-public class StatusTask {
+public class StatusTask implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    @OneToMany(cascade = { CascadeType.PERSIST}, mappedBy = "statusTask")
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "statusTask")
     @JsonIgnoreProperties("statusTask")
     private Set<Task> tasks;
-    
+
 }

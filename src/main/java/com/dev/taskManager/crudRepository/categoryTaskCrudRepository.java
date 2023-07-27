@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author eduar
  */
-public interface categoryTaskCrudRepository extends JpaRepository<CategoryTask, Integer>{
+public interface categoryTaskCrudRepository extends JpaRepository<CategoryTask, Integer> {
     
 }

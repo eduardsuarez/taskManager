@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -24,15 +25,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "etiqueta")
-public class Label {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "label")
+public class Label implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    
     @ManyToMany(mappedBy = "labels")
     private Set<Task> tasks = new HashSet<>();
-    
-    
+
 }

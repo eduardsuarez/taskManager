@@ -16,13 +16,6 @@ public interface userCrudRepository extends JpaRepository<User, Integer>{
     public Optional<User> findByEmail(String email);
     public Optional<User> findByName(String name);
 
-    /**
-     *
-     * @param email
-     * @param password
-     * @return
-
     public Optional<User> findByEmailAndPassword(String email, String password);
-     */
-
+    
 }

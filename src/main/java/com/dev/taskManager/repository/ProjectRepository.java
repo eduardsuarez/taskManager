@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ProjectRepository {
-    @Autowired
+     @Autowired
     private projectCrudRepository crudRepository;
     
     public Project create(Project project){
@@ -39,6 +39,5 @@ public class ProjectRepository {
         crudRepository.delete(project);
         
     }
-    
     
 }

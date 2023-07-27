@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/task")
 public class TaskController {
-    @Autowired
+     @Autowired
     private TaskService taskService;
     
     @PostMapping("/new")
@@ -60,5 +60,4 @@ public class TaskController {
     public List<Task> getTasksTime(@PathVariable("dateOne") String dateOne, @PathVariable("dateTwo") String dateTwo ){
         return taskService.reportTaskTime(dateOne, dateTwo);
     }
-    
 }

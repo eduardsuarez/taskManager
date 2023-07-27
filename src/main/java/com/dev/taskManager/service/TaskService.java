@@ -6,13 +6,14 @@ package com.dev.taskManager.service;
 
 import com.dev.taskManager.entity.Task;
 import com.dev.taskManager.repository.TaskRepository;
-
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.LocalDate;
-import java.util.*;
-
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TaskService {
-
     @Autowired
     private TaskRepository taskRepository;
 
@@ -102,6 +102,5 @@ public class TaskService {
             return Collections.emptyList();
         }
     }
-
-
+    
 }

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
+    
     @Autowired
     private ProjectService projectService;
     
@@ -55,5 +56,4 @@ public class ProjectController {
     public boolean delete(@PathVariable("id") int id){
         return projectService.delete(id);
     }
-    
 }

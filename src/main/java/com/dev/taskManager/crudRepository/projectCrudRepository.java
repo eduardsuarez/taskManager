@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author eduar
  */
-public interface projectCrudRepository extends JpaRepository<Project, Integer>{
+public interface projectCrudRepository extends JpaRepository<Project, Integer> {
     
 }

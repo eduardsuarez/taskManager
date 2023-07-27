@@ -4,13 +4,13 @@
  */
 package com.dev.taskManager.crudRepository;
 
-import com.dev.taskManager.entity.StatusTask;
+import com.dev.taskManager.entity.PriorityTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author eduar
  */
-public interface statusTaskCrudRepository extends JpaRepository<StatusTask, Integer> {
+public interface priorityTaskCrudRepository extends JpaRepository<PriorityTask, Integer>{
     
 }

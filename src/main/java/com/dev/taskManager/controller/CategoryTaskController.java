@@ -55,5 +55,4 @@ public class CategoryTaskController {
     public boolean delete(@PathVariable("id") int id){
         return service.delete(id);
     }
-    
 }

@@ -1,14 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.dev.taskManager.service;
-
 
 import com.dev.taskManager.entity.PriorityTask;
 import com.dev.taskManager.repository.PriorityTaskRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+/**
+ *
+ * @author eduar
+ */
 @Service
 public class PriorityTaskService {
     @Autowired

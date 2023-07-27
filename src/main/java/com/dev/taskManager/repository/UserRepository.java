@@ -39,6 +39,11 @@ public class UserRepository {
     public Optional<User> findByName(String name) {
         return userCrudRepository.findByName(name);
     }
+    
+    public Optional<User> findByEmail(String email) {
+        return userCrudRepository.findByEmail(email);
+       
+    }
 
 
     public List<User> findAllUsers() {
@@ -56,10 +61,12 @@ public class UserRepository {
         userCrudRepository.delete(user);
 
     }
-/**
+
     public Optional<User> authenticateUser(String email, String password) {
         return userCrudRepository.findByEmailAndPassword(email, password);
     }
- **/
+
+    
+ 
     
 }

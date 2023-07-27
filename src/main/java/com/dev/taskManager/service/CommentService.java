@@ -1,16 +1,23 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.dev.taskManager.service;
 
 import com.dev.taskManager.entity.Comment;
-import com.dev.taskManager.entity.Task;
 import com.dev.taskManager.repository.CommentRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+/**
+ *
+ * @author eduar
+ */
 @Service
 public class CommentService {
+
     @Autowired
     private CommentRepository repository;
 
@@ -60,6 +67,5 @@ public class CommentService {
             return true;
         }
     }
-
 
 }

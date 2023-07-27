@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.dev.taskManager.service;
+
 import com.dev.taskManager.entity.User;
 import com.dev.taskManager.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,28 +18,28 @@ import org.springframework.stereotype.Service;
  * @author eduar
  */
 @Service
-public class userService {
-    @Autowired
-    private UserRepository userRepository;
-    /**
+public class UserService {
+
+    private final UserRepository userRepository;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public userService(BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-     **/
 
     public User save(User user) {
         if (user.getId() == null) {
-            //String encryptedPassword = passwordEncoder.encode(user.getPassword());
-            //user.setPassword(encryptedPassword);
+            String encryptedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encryptedPassword);
             return userRepository.save(user);
         } else {
             Optional<User> existingUser = userRepository.findUserById(user.getId());
             if (existingUser.isEmpty()) {
                 if (!existEmail(user.getEmail())) {
-                    //String encryptedPassword1 = passwordEncoder.encode(user.getPassword());
-                    //user.setPassword(encryptedPassword1);
+                    String encryptedPassword1 = passwordEncoder.encode(user.getPassword());
+                    user.setPassword(encryptedPassword1);
                     return userRepository.save(user);
                 } else {
                     return user;
@@ -49,19 +49,18 @@ public class userService {
             }
         }
     }
-    
+
     public boolean existEmail(String email) {
         return userRepository.existEmail(email);
     }
-    
-    
+
     public Optional<User> getUserById(int id) {
         return userRepository.findUserById(id);
     }
+
     public Optional<User> findByName(String name) {
         return userRepository.findByName(name);
     }
-
 
     public List<User> findAllUsers() {
         return userRepository.findAllUsers();
@@ -70,6 +69,7 @@ public class userService {
     public Page<User> findAllUsersPageable(Pageable pageable) {
         return userRepository.findAllUsersPageable(pageable);
     }
+
     public User updateUser(User user) {
         if (user.getId() != null) {
             Optional<User> userDb = userRepository.findUserById(user.getId());
@@ -109,21 +109,38 @@ public class userService {
         }
     }
 
-
-/*
     public User authenticateUser(String email, String password) {
-        Optional<User> user = userRepository.authenticateUser(email, password);
+        
+        Optional<User> user = userRepository.findByEmail(email);
+        System.out.println("user from DB: " + user);
+        
         if (user.isEmpty()) {
-            return new User();
+            return null;
         } else {
-            return user.get();
+            
+            //System.out.println("correo recibido: " + email + " contraseña: " + password);
+
+            /* Aquí se realiza la comparación entre la contraseña cifrada en la 
+            base de datos y la contraseña sin cifrar ingresada por el usuario
+            Si coincide, el usuario está autenticado; de lo contrario, el usuario
+            no está autenticado. */
+           
+            String storedPassword = user.get().getPassword(); // contraseña cifrada almacenada en la base de datos
+            
+            boolean isPasswordValid = passwordEncoder.matches(password, storedPassword);
+            //System.out.println("correo recibido: " + email + " contraseña: " + password + " es cierto: " + (isPasswordValid ? "sí" : "no"));
+            
+            
+            if (isPasswordValid) {
+                System.out.println("se autenticó");
+                return user.get();
+            } else {
+                System.out.println("error");
+                return null;
+            }
+
         }
 
     }
- */
-
-
-
-
 
 }

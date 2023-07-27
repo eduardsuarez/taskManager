@@ -55,5 +55,4 @@ public class StatusTaskController {
     public boolean delete(@PathVariable("id") int id){
         return service.delete(id);
     }
-    
 }

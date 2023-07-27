@@ -5,7 +5,7 @@
 package com.dev.taskManager.controller;
 
 import com.dev.taskManager.entity.User;
-import com.dev.taskManager.service.userService;
+import com.dev.taskManager.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
@@ -21,9 +31,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/user")
-public class userController {
+public class UserController {
+    
     @Autowired
-    private userService userService;
+    private UserService userService;
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,8 +44,17 @@ public class userController {
     }
     
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+        
+        // Obtener el usuario por ID
+        Optional<User> user = userService.getUserById(id);
+        
+        // Verificar si el usuario existe y si tiene permiso para acceder  a esta información
+        if (user.isPresent() && user.get().getRole() == User.UserRole.ADMIN) {
+            return ResponseEntity.ok(user.get());
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
     @GetMapping("/name/{userName}")
     public Optional<User> findByName(@PathVariable("name") String name) {
@@ -66,12 +86,16 @@ public class userController {
         return userService.deleteUserById(id);
     }
 
-    /*
-    @GetMapping("/{email}/{password}")
-    public User authnticatedUser(@PathVariable("email") String email, @PathVariable("password") String password){
-        return userService.authenticateUser(email, password);
+    
+    @PostMapping("/authenticate")
+    public ResponseEntity<User> authnticatedUser(@RequestBody User user){
+        User authenticatedUser = userService.authenticateUser(user.getEmail(), user.getPassword());
+        if (authenticatedUser != null) {
+            return ResponseEntity.ok(authenticatedUser);
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
-    */
     
     
 }

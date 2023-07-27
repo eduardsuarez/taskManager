@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CategoryTaskService {
-    @Autowired
+     @Autowired
     private CategoryTaskRepository repository;
     
     public CategoryTask create(CategoryTask categoryTask) {
@@ -63,5 +63,4 @@ public class CategoryTaskService {
             return true;
         }
     }
-    
 }
